@@ -3,8 +3,6 @@ package conjungo
 import (
 	"fmt"
 	"reflect"
-
-	"github.com/sirupsen/logrus"
 )
 
 // A MergeFunc defines how two items are merged together. It should accept a reflect.Value
@@ -99,7 +97,7 @@ func mergeMap(t, s reflect.Value, o *Options) (v reflect.Value, err error) {
 	}()
 
 	for _, k := range keys {
-		logrus.Debugf("MERGE T<>S '%s' :: %v <> %v", k, t.MapIndex(k), s.MapIndex(k))
+		fmt.Printf("MERGE T<>S '%s' :: %v <> %v\n", k, t.MapIndex(k), s.MapIndex(k))
 		val, err := merge(t.MapIndex(k), s.MapIndex(k), o)
 		if err != nil {
 			return reflect.Value{}, fmt.Errorf("key '%s': %v", k, err)
@@ -139,7 +137,7 @@ func mergeStruct(t, s reflect.Value, o *Options) (reflect.Value, error) {
 
 	for i := 0; i < valS.NumField(); i++ {
 		fieldT := newT.Field(i)
-		logrus.Debugf("merging struct field %s", fieldT)
+		fmt.Printf("merging struct field %s\n", fieldT)
 
 		// field is addressable because it's created above. So this means it is unexported.
 		if !fieldT.CanSet() {
@@ -160,7 +158,7 @@ func mergeStruct(t, s reflect.Value, o *Options) (reflect.Value, error) {
 		}
 
 		if !merged.IsValid() {
-			logrus.Warnf("merged value is invalid for field %s. Falling back to default merge: %v <> %v",
+			fmt.Printf("merged value is invalid for field %s. Falling back to default merge: %v <> %v\n",
 				newT.Type().Field(i).Name, valT.Field(i), valS.Field(i))
 
 			// if merge returned an invalid value, fallback to a default merge for the field

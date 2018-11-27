@@ -7,12 +7,7 @@ import (
 	"reflect"
 
 	"github.com/InVisionApp/conjungo"
-	log "github.com/sirupsen/logrus"
 )
-
-func init() {
-	log.SetLevel(log.InfoLevel)
-}
 
 func main() {
 	fmt.Println("Simple map merge")
@@ -56,7 +51,7 @@ func SimpleMap() {
 
 	err := conjungo.Merge(&targetMap, sourceMap, nil)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	marshalIndentPrint(targetMap)
@@ -86,7 +81,7 @@ func SimpleStruct() {
 
 	err := conjungo.Merge(&targetStruct, sourceStruct, nil)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	marshalIndentPrint(targetStruct)
@@ -131,7 +126,7 @@ func CustomMerge() {
 
 	err := conjungo.Merge(&targetMap, sourceMap, opts)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	marshalIndentPrint(targetMap)
@@ -172,7 +167,7 @@ func CustomStructMerge() {
 
 	err := conjungo.Merge(&target, source, opts)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	marshalIndentPrint(target)
@@ -195,7 +190,7 @@ func NoOverwrite() {
 	opts.Overwrite = false
 	err := conjungo.Merge(&targetMap, sourceMap, opts)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	marshalIndentPrint(targetMap)
@@ -256,7 +251,7 @@ func FromJSON() {
 
 	err := conjungo.Merge(&targetJSON, sourceJSON, opts)
 	if err != nil {
-		log.Error(err)
+		fmt.Println(err)
 	}
 
 	fmt.Println(targetJSON)
